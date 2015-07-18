@@ -11,17 +11,24 @@ var Login = require("./locations/login/Login.js")
 var CreateChallenge = require("./locations/createChallenge/CreateChallenge.js")
 
 // Instantiate site 
+var Navbar = require("./ui/navbar/Navbar.js")
+var injectTapEventPlugin = require("react-tap-event-plugin");
+injectTapEventPlugin();
+
 var ChallengeApp = React.createClass({
   getInitialState: function() {
     return {items: [], text: ''};
   },
   render: function() {
     return (
-      <Locations>
-        <Location path="/" handler={Dashboard} />
-        <Location path="/login" handler={Login} />
-        <Location path="/create" handler={CreateChallenge} />
-      </Locations>
+      <div>
+        <Navbar />
+        <Locations>
+          <Location path="/" handler={Dashboard} />
+          <Location path="/login" handler={Login} />
+          <Location path="/create" handler={CreateChallenge} />
+        </Locations>
+      </div>
     );
   }
 });
