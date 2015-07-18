@@ -6,9 +6,10 @@ var React = window.React = require('react'),
     Location = Router.Location;
 
 // Grab components that need to be used
-var Dashboard = require("./locations/dashboard/Dashboard.js")
-var Login = require("./locations/login/Login.js")
-var CreateChallenge = require("./locations/createChallenge/CreateChallenge.js")
+var Dashboard = require("./locations/dashboard/Dashboard.js");
+var Login = require("./locations/login/Login.js");
+var ViewAttempt = require("./locations/viewAttempt/ViewAttempt");
+var CreateChallenge = require("./locations/createChallenge/CreateChallenge.js");
 
 // Instantiate site 
 var Navbar = require("./ui/navbar/Navbar.js")
@@ -26,6 +27,7 @@ var ChallengeApp = React.createClass({
         <Locations>
           <Location path="/" handler={Dashboard} />
           <Location path="/login" handler={Login} />
+          <Location path="/viewAttempt" handler={ViewAttempt} />
           <Location path="/create" handler={CreateChallenge} />
         </Locations>
       </div>
