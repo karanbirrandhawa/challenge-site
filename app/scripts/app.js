@@ -9,7 +9,8 @@ var React = window.React = require('react'),
 var Dashboard = require("./locations/dashboard/Dashboard.js")
 var Login = require("./locations/login/Login.js")
 var Navbar = require("./ui/navbar/Navbar.js")
-
+var injectTapEventPlugin = require("react-tap-event-plugin");
+injectTapEventPlugin();
 // Instantiate site
 var ChallengeApp = React.createClass({
   getInitialState: function() {
