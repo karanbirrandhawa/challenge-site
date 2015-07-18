@@ -2,7 +2,7 @@
 
 var gulp = require('gulp');
 var del = require('del');
-
+var historyApiFallback = require('connect-history-api-fallback');
 
 
 // Load plugins
@@ -163,7 +163,11 @@ gulp.task('watch', ['html', 'fonts', 'bundle'], function() {
         // Note: this uses an unsigned certificate which on first access
         //       will present a certificate warning in the browser.
         // https: true,
-        server: ['dist', 'app']
+        // server: ['dist', 'app']
+        server: {
+            baseDir: ['dist', 'app'],
+            middleware:[ historyApiFallback() ]
+        }
     });
 
     // Watch .json files
