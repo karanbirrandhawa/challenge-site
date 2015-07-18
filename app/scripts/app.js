@@ -1,4 +1,3 @@
-
 var React = window.React = require('react'),
     mountNode = document.getElementById("app"),
     Router = require('react-router-component'),
