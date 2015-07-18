@@ -9,6 +9,7 @@ var React = window.React = require('react'),
 var Dashboard = require("./locations/dashboard/Dashboard.js")
 var Login = require("./locations/login/Login.js")
 var CreateChallenge = require("./locations/createChallenge/CreateChallenge.js")
+var ChallengeDisplay = require("./locations/challengeDisplay/ChallengeDisplay.js")
 
 // Instantiate site 
 var Navbar = require("./ui/navbar/Navbar.js")
@@ -27,6 +28,7 @@ var ChallengeApp = React.createClass({
           <Location path="/" handler={Dashboard} />
           <Location path="/login" handler={Login} />
           <Location path="/create" handler={CreateChallenge} />
+          <Location path="/challenge" handler={ChallengeDisplay} />
         </Locations>
       </div>
     );

@@ -27,6 +27,29 @@ body {
     padding: 0.2em 0;
 }
 
+// Challenge Display page by Steven
+.challengePriceCard{
+    display:inline-block;
+    margin-right:10px;
+}
+
+.inline{
+    display:inline-block;
+}
+
+.challengeButton{
+    margin-top: 50px;
+    margin-left: 1000px;
+}
+
+.challengeButtonAttemp{
+    margin-left: 50px;
+}
+
+.commentBox{
+    margin-top: 50px;
+}
+
 .form-container {
     margin: 20px;
 }
@@ -56,3 +79,4 @@ body {
     margin-right:0;
     width:100%;
 }
+
