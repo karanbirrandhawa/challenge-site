@@ -1,11 +1,15 @@
 
-var React = window.React = require('react');
-
+var React = window.React = require('react'),
+    ListCard = require('../../ui/ListCard');
 // Instantiate site 
 var Dashboard = React.createClass({
+  
   render: function() {
+  	var content="dashboardList";
     return (
-      <div></div>
+        <div className={content}>
+            <ListCard>Test</ListCard>
+        </div>
     );
   }
 });
