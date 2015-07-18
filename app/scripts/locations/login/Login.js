@@ -17,7 +17,6 @@ var Login = React.createClass({
 	    return (
 	       	<FlatButton linkButton={true} href="https://github.com/callemall/material-ui" secondary={true} label="Login with GitHub">	
 			</FlatButton>
-
 	    );
 	}
 });
