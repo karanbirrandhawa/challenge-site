@@ -8,6 +8,7 @@ var React = window.React = require('react'),
 // Grab components that need to be used
 var Dashboard = require("./locations/dashboard/Dashboard.js")
 var Login = require("./locations/login/Login.js")
+var CreateChallenge = require("./locations/createChallenge/CreateChallenge.js")
 
 // Instantiate site 
 var ChallengeApp = React.createClass({
@@ -19,10 +20,10 @@ var ChallengeApp = React.createClass({
       <Locations>
         <Location path="/" handler={Dashboard} />
         <Location path="/login" handler={Login} />
+        <Location path="/create" handler={CreateChallenge} />
       </Locations>
     );
   }
 });
-
 
 React.render(<ChallengeApp />, mountNode);
