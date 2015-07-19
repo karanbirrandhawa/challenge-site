@@ -53,12 +53,17 @@ body {
 .form-container {
     margin: 20px;
 }
-
+.wrap-button {
+    display: inline;
+    position: relative;
+    margin-left: 5px;
+    margin-right: 5px;
+    height: 50px;
+}
 .row{
     margin-left: 20px;
-    margin-right: 20px;
-    width: 100%;
-    height: 100px;
+    margin-right: 100px;
+    width:inherit;
 }
 
 .dashboardList{
@@ -76,7 +81,5 @@ body {
 
 .content-right{
     float:right;
-    margin-right:0;
-    width:100%;
 }
 
