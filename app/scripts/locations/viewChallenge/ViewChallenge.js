@@ -11,14 +11,36 @@ var UserDataMixin = require('../../mixins/UserDataMixin.js');
 // Instantiate site 
 var ViewChallenge = React.createClass({
 	getInitialState: function() {
-		return {
-			// TODO: add challenge to these pending user id
-			challengedAttempted: false,
-			isMyChallenge: false,
-			myAttemptInfo: {
-				forkUrl: ""
+		var finalObj = {};
+		var loc = window.location.href;
+    	var items = loc.split("?id=");
+    	var url = "api/challenge/" + items[1];
+
+    	var d;
+
+    	if (items.length > 1) {
+    		$.ajax({
+	          type: "GET",
+	          url: url,
+	          async: false
+	        }).done(function(data) {
+	            d = data;
+	        });
+    	}
+
+    	console.log(d);
+    	if (d) {
+    		return {
+				// TODO: add challenge to these pending user id
+				challengeTitle: d.title,
+				challengeTitleDescription: d.description,
+				challengeGitIssueID: d.gitIssueID,
+				challengeGitIssueURL: d.gitIssueURL
 			}
-		}
+    	} else {
+    		return {
+			}
+    	}
 	},
 	childContextTypes: {
 		muiTheme: React.PropTypes.object
@@ -74,21 +96,10 @@ var ViewChallenge = React.createClass({
 		  { text: 'Submit', onTouchTap: this._onDialogSubmit, ref: 'submit' }
 		];
 
-		var loc = window.location.href;
-    	var items = loc.split("?id=");
-
-    	if (items.length > 1) {
-    		$.get("api/challenge/" + items[1], function(data) {
-    			this.state.myAttemptInfo.title = data.title;
-    			this.state.myAttemptInfo.gitIssueURL = data.gitIssueURL;
-    			this.state.myAttemptInfo.gitIssueID = data.gitIssueID;
-    		});
-    	}
-
 	 	return (
 	 	<div>
 	 		<Card>
-				<CardTitle className="inline" title={title}/>
+				<CardTitle className="inline" title={this.state.challengeTitle} />
 			</Card>
 			<div className ="challengeButton">
 				<FlatButton linkButton={true} href="/viewAllAttempts" secondary={true} label="View all pull requests">	
@@ -99,7 +110,7 @@ var ViewChallenge = React.createClass({
 			<div className="commentBox">
 				<div>Comments:</div>
 				<Card>
-					<div>{challengeData.commentText}</div>
+					<div>{this.state.challengeTitleDescription}</div>
 				</Card>
 			</div>
 
