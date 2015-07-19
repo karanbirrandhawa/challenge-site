@@ -3,7 +3,7 @@ var mui = require('material-ui');
 var TextField = mui.TextField;
 var Card = mui.Card;
 var CardTitle = mui.CardTitle;
-var FlatButton = mui.FlatButton;
+var RaisedButton = mui.RaisedButton;
 var Dialog = mui.Dialog;
 var ThemeManager = mui.Styles.ThemeManager();
 var UserDataMixin = require('../../mixins/UserDataMixin.js');
@@ -97,21 +97,12 @@ var ViewChallenge = React.createClass({
 		];
 
 	 	return (
-	 	<div>
+	 	<div className="main-container">
 	 		<Card>
 				<CardTitle className="inline" title={this.state.challengeTitle} />
 			</Card>
-			<div className ="challengeButton">
-				<FlatButton linkButton={true} href="/viewAllAttempts" secondary={true} label="View all pull requests">	
-				</FlatButton>
-				<FlatButton onClick={this.attemptChallenge} secondary={true} label="Attempt it!">	
-				</FlatButton>
-			</div>
-			<div className="commentBox">
-				<div>Comments:</div>
-				<Card>
-					<div>{this.state.challengeTitleDescription}</div>
-				</Card>
+			<div className ="challengeButton pull-right">
+				<RaisedButton onClick={this.attemptChallenge} secondary={true} label="Attempt it!"/>
 			</div>
 
 			<Dialog
