@@ -2,7 +2,10 @@
   "name": "challenge",
   "version": "0.0.0",
   "dependencies": {
+    "braintree-react": "^2.0.0",
+    "braintree-web": "^2.10.0",
     "connect-history-api-fallback": "^1.1.0",
+    "form-serialize": "^0.6.0",
     "jquery": "^2.1.4",
     "material-ui": "^0.10.1",
     "react-async": "^2.1.0",

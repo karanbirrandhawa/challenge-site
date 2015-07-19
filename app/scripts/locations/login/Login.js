@@ -18,9 +18,6 @@ var Login = React.createClass({
 	},
 	render: function() {
 		var userData = UserDataMixin.login();
-	  	if (userData) {
-	  		window.history.pushState(null, null, "/");
-	  	}
 
 		var client_id = AppDataMixin.getClientId();
 		var url = "https://github.com/login/oauth/authorize?client_id=" + client_id 

@@ -46,11 +46,7 @@ var Dashboard = React.createClass({
     window.history.pushState(null, null, "/login");
   },
   render: function() {
-
-    var userData = UserDataMixin.login();
-    if (!userData) {
-      window.history.pushState(null, null, "/login");
-    }
+    
     var content="dashboardList";
     var self = this;
     return (
@@ -63,7 +59,7 @@ var Dashboard = React.createClass({
               console.log(result);
               return (
                   <ListItem>
-                    <Link href={url}>{result.title}</Link>
+                    <Link href={url}>{result.title} @ $15 by {result.assigner}</Link>
                   </ListItem>
                 )
             })
