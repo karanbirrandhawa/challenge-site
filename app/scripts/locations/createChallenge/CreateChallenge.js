@@ -50,11 +50,10 @@ var CreateChallenge = React.createClass({
 		challengeJson.description = description;
 		challengeJson.challengeType = challengeType;
 		challengeJson.prize = prize;
+		challengeJson.user = repo.owner.login;
 		challengeJson.repo = repo;
-		console.lo
 
 		console.log("challengeJson is", challengeJson);
-		// need to send challengeJson to the api
 
 		var tokenStr = "token " + UserDataMixin.getAccessToken();
 		console.log(tokenStr);
@@ -86,6 +85,20 @@ var CreateChallenge = React.createClass({
 		promise.then(function(resolvedResponse) {
 			console.log(resolvedResponse);
 			console.log("resolved");
+			// need to send challengeJson to the api
+			challengeJson.gitID = resolvedResponse.id;
+			challengeJson.gitURL = resolvedResponse.html_url;
+			$.ajax({
+		    	type: "POST",
+		    	url: "api/challenge/create",
+		    	data: JSON.stringify(challengeJson),
+		    	beforeSend: function (request)
+	            {
+					request.setRequestHeader("Content-Type", "application/json");
+	            }
+			}).done(function(data) {
+				console.log(data);
+			});
 		}, function(rejectedResponse) {
 			console.log(rejectedResponse);
 		});
