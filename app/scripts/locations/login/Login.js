@@ -23,7 +23,8 @@ var Login = React.createClass({
 	  	}
 
 		var client_id = AppDataMixin.getClientId();
-		var url = "https://github.com/login/oauth/authorize?client_id=" + client_id;
+		var url = "https://github.com/login/oauth/authorize?client_id=" + client_id 
+					+ "&scope=public_repo"
 
 	    return (
 	       	<FlatButton linkButton={true} href={url} secondary={true} label="Login with GitHub">	

@@ -51,9 +51,44 @@ var CreateChallenge = React.createClass({
 		challengeJson.challengeType = challengeType;
 		challengeJson.prize = prize;
 		challengeJson.repo = repo;
+		console.lo
 
 		console.log("challengeJson is", challengeJson);
 		// need to send challengeJson to the api
+
+		var tokenStr = "token " + UserDataMixin.getAccessToken();
+		console.log(tokenStr);
+		// here, we create a github issue
+		var ownerName = repo.owner.login;
+		var repoName = repo.name;
+		var url = "https://api.github.com/repos/" + ownerName + "/" + repoName + "/issues";
+		var promise = new Promise(function(resolve, reject) {
+			$.ajax({
+		    	type: "POST",
+		    	url: url,
+		    	data: JSON.stringify({
+		    		title: title,
+		    		body: description
+		    	}),
+		    	beforeSend: function (request)
+	            {
+					request.setRequestHeader("Authorization", tokenStr);
+					request.setRequestHeader("Content-Type", "application/json");
+	            }
+			}).done(function(data) {
+				if (data.error) {
+					reject(data);
+				} else {
+					resolve(data);
+				}
+			});
+		});
+		promise.then(function(resolvedResponse) {
+			console.log(resolvedResponse);
+			console.log("resolved");
+		}, function(rejectedResponse) {
+			console.log(rejectedResponse);
+		});
 	},
 	getRepoList: function() {
 		var userData = UserDataMixin.login();
