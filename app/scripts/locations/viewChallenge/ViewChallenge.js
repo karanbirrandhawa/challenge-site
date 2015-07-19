@@ -3,7 +3,7 @@ var mui = require('material-ui');
 var TextField = mui.TextField;
 var Card = mui.Card;
 var CardTitle = mui.CardTitle;
-var FlatButton = mui.FlatButton;
+var RaisedButton = mui.RaisedButton;
 var Dialog = mui.Dialog;
 var Snackbar = mui.Snackbar;
 var ThemeManager = mui.Styles.ThemeManager();
@@ -104,6 +104,7 @@ var ViewChallenge = React.createClass({
 		];
 
 	 	return (
+<<<<<<< HEAD
 		 	<div>
 		 		<Card>
 					<CardTitle className="inline" title={this.state.challengeTitle} />
@@ -120,6 +121,13 @@ var ViewChallenge = React.createClass({
 						<div>{this.state.challengeTitleDescription}</div>
 					</Card>
 				</div>
+	 	<div className="main-container">
+	 		<Card>
+				<CardTitle className="inline" title={this.state.challengeTitle} />
+			</Card>
+			<div className ="challengeButton pull-right">
+				<RaisedButton onClick={this.attemptChallenge} secondary={true} label="Attempt it!"/>
+			</div>
 
 				<Snackbar
 				  ref="snackbar"
