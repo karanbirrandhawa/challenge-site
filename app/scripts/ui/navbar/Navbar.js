@@ -32,7 +32,7 @@ var Navbar = React.createClass({
 
 		//Toggle the LeftNav
 		return (
-			<div>
+			<div style={{marginTop:'0'}}>
 				<AppBar
 					onLeftIconButtonTouchTap={this.toggle}
 					title="Title" />

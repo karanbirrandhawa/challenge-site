@@ -14,15 +14,22 @@ var React = window.React = require('react'),
 	ThemeManager = mui.Styles.ThemeManager()
 	UserDataMixin = require('../../mixins/UserDataMixin.js');
 
+var serialize = require('form-serialize');
+
+var DropIn = require("braintree-react").DropIn;
+var braintree = require("braintree-web");
+
 var CreateChallenge = React.createClass({
 	getInitialState: function() {
 		return {
 			repoList: null,
-			selected: null
+			selected: null,
+			btClientToken: null
 		};
 	},
 	componentDidMount: function() {
 		this.getRepoList();
+		this.getBTClientID();
 	},
 	childContextTypes: {
 		muiTheme: React.PropTypes.object
@@ -98,9 +105,54 @@ var CreateChallenge = React.createClass({
 	            }
 			}).done(function(data) {
 				console.log(data);
+				var form = document.querySelector('#example-form');
+				var str = serialize(form);
+
+				$.ajax({
+			    	type: "POST",
+			    	url: "api/purchases",
+			    	data: str,
+			    	beforeSend: function (request)
+		            {
+						request.setRequestHeader("Content-Type", "application/json");
+		            }
+				}).done(function(data) {
+					console.log("Response for form");
+					console.log(data);
+					var form = document.querySelector('.braintree-paypal-form');
+					var str = serialize(form);
+					
+					window.history.pushState(null, null, "/");
+				});
 			});
 		}, function(rejectedResponse) {
 			console.log(rejectedResponse);
+		});
+	},
+	getBTClientID: function() {
+		// send a request at the beginning to the btClientToken
+		var self = this;
+		var promise = new Promise(function(resolve, reject) {
+			$.ajax({
+		    	type: "GET",
+		    	url: "api/client_token"
+			}).done(function(data) {
+				if (data.error) {
+					reject(data);
+				} else {
+					resolve(data);
+				}
+			});
+		});
+		promise.then(function(resolvedResponse) {
+			self.setState({
+				btClientToken: resolvedResponse
+			});
+			console.log(resolvedResponse);
+			console.log("resolved");
+		}, function(rejectedResponse) {
+			console.log(rejectedResponse);
+			console.log("rejected");
 		});
 	},
 	getRepoList: function() {
@@ -136,7 +188,7 @@ var CreateChallenge = React.createClass({
 		});
 	},
 	render: function() {
-		if (!this.state.repoList) {
+		if (!this.state.repoList || !this.state.btClientToken) {
 			return (
 				<CircularProgress mode="indeterminate" />
 				);
@@ -191,10 +243,13 @@ var CreateChallenge = React.createClass({
 										multiLine={true}
 										fullWidth={true}
 										ref="description" />
-									<RaisedButton
-										label="Submit"
-										secondary={true}
-										onClick={this.handleSubmit} />
+									<form className={"braintree-paypal-form"}>
+										<DropIn braintree={braintree} />
+										<RaisedButton
+											label="Submit"
+											secondary={true}
+											onClick={this.handleSubmit} />
+									</form>
 								</div>
 							</CardText>
 		    		</Card>

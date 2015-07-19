@@ -9,6 +9,8 @@ var CircularProgress = mui.CircularProgress;
 var RaisedButton = mui.RaisedButton;
 var List = mui.List;
 var	ListItem = mui.ListItem;
+var DropIn = require("braintree-react").DropIn;
+var braintree = require("braintree-web");
 
 // Hardcoded Github Commits
 	// when we grab the info by using github, we'll have the commit history somehow
@@ -258,10 +260,6 @@ var ReviewAttempt = React.createClass({
 										})
 									}
 								</List>
-								<RaisedButton
-									label="Create Pull Request"
-									secondary={true}
-									onClick={this.handleSubmit} />
 							</div>
 						</CardText>
 	    			</Card>

@@ -35,13 +35,13 @@ var Dashboard = React.createClass({
         challenges: [{
           owner: "Anthony",
           title: "this is the first issue",
-          prize: "90",
+          prize: "20",
           description: "this is the description",
           id: "95903349"
         }, {
           owner: "Anthony",
           title: "another feature",
-          prize: "100",
+          prize: "35",
           description: "this is another description",
           id: "95892857"
         }
@@ -63,11 +63,6 @@ var Dashboard = React.createClass({
     window.open(url);
   },
   render: function() {
-
-    var userData = UserDataMixin.login();
-    if (!userData) {
-      window.history.pushState(null, null, "/login");
-    }
     var content="dashboardList";
     var self = this;
     return (
@@ -87,6 +82,7 @@ var Dashboard = React.createClass({
                     <MainCard
                       owner={result.owner}
                       title={result.title}
+                      money={result.prize}
                       description={result.description}/>
                   </ListItem>
                 )
