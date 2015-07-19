@@ -101,7 +101,35 @@ body {
     margin-left:-24px !important;
 }
 
-.frontPage { 
+.center-horizontal {
+    position: relative;
+    text-align: center;
+    width: 50%;
+    margin:0 auto;
+}
+
+.pull-right {
+    position: relative;
+    float: right;
+}
+
+.pull-left {
+    position: relative;
+    float: left;
+}
+
+.main-card {
+    padding:10px;
+    height:80px;
+}
+
+.main-card-money {
+    top:-60px;
+    right:15px;
+    font-size:24px;
+    color: #00bcd4;
+}
+.frontPage {
   background: url(http://www.inc.com/uploaded_files/image/1940x900/software-computer-code-1940x900_35196.jpg) no-repeat center center fixed; 
   width: inherit;
   min-height: 800px;

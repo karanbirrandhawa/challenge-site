@@ -1,12 +1,12 @@
 var React = window.React = require('react'),
 	mui = require('material-ui'),
-	AppBar = mui.AppBar,
-	LeftNav = mui.LeftNav,
+	Card = mui.Card,
+	CardTitle = mui.CardTitle,
 	MenuItem = mui.MenuItem,
 	ThemeManager = mui.Styles.ThemeManager();
 
 // Instantiate site
-var Navbar = React.createClass({
+var MainCard = React.createClass({
 
 	childContextTypes: {
 		muiTheme: React.PropTypes.object
@@ -26,25 +26,19 @@ var Navbar = React.createClass({
 				type: MenuItem.Types.LINK,
      			payload: '/create',
      			text: 'Create Challenges'
-     		},
-     		{
-				type: MenuItem.Types.LINK,
-     			payload: '/',
-     			text: 'All Challenges'
      		}
 		];
-		console.log(AppBar);
 
 		//Toggle the LeftNav
 		return (
-			<div style={{marginTop:'0'}}>
-				<AppBar
-					onLeftIconButtonTouchTap={this.toggle}
-					title="Title" />
-				<LeftNav docked={false}  ref="leftNav" menuItems={menuItems} />
+			<div class="main-card">
+				<Card>
+					<CardTitle title={this.props.title} subtitle={this.props.description}/>
+					<div className="main-card-money pull-right">{this.props.money}</div>
+				</Card>
 			</div>
 		);
 	}
 });
 
-module.exports = Navbar;
+module.exports = MainCard;
