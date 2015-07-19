@@ -40,7 +40,7 @@ var Navbar = React.createClass({
 			<div style={{marginTop:'0'}}>
 				<AppBar
 					onLeftIconButtonTouchTap={this.toggle}
-					title="Title" />
+					title="ChallengeHub" />
 				<LeftNav docked={false}  ref="leftNav" menuItems={menuItems} />
 			</div>
 		);
