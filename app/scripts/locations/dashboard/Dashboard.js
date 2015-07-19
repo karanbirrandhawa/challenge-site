@@ -71,7 +71,7 @@ var Dashboard = React.createClass({
           <div className="center-horizontal">
             <h1>My Feed</h1>
           </div>
-          <List className={content}>
+          <List className={content} style={{ background: 'none' }}>
           {
             this.state.challenges.map(function(result, key) {
               var url = "/challenge?id=" + result.gitIssueID;
