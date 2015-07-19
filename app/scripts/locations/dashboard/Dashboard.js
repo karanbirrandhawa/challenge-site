@@ -6,6 +6,8 @@ var mui = require('material-ui');
 var ListItem = mui.ListItem;
 var List = mui.List;
 var ThemeManager = mui.Styles.ThemeManager();
+var Router = require('react-router-component');
+var Link = Router.Link;
 
 // Instantiate site 
 var Dashboard = React.createClass({
@@ -39,6 +41,10 @@ var Dashboard = React.createClass({
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
+  handleClick: function(id) {
+    var url = "/challenge?id=" + id;
+    window.history.pushState(null, null, "/login");
+  },
   render: function() {
 
     var userData = UserDataMixin.login();
@@ -53,9 +59,11 @@ var Dashboard = React.createClass({
           <List className={content}>
           { 
             this.state.challenges.map(function(result) {
+              var url = "/challenge?id=" + result.gitIssueID;
+              console.log(result);
               return (
                   <ListItem>
-                    {result.title}
+                    <Link href={url}>{result.title}</Link>
                   </ListItem>
                 )
             })
