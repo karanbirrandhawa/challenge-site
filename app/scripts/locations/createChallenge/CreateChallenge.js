@@ -4,6 +4,7 @@ var React = window.React = require('react'),
 	Card = mui.Card,
 	CardText = mui.CardText,
 	CardTitle = mui.CardTitle,
+	DropDownMenu = mui.DropDownMenu,
 	RadioButton = mui.RadioButton,
 	RadioButtonGroup = mui.RadioButtonGroup,
 	RaisedButton = mui.RaisedButton,
@@ -18,6 +19,11 @@ var CreateChallenge = React.createClass({
 		return {
 			muiTheme: ThemeManager.getCurrentTheme()
 		};
+	},
+	handleSelected: function(e, selectedIndex, menuItem) {
+		console.log("e", e);
+		console.log("selectedIndex", selectedIndex);
+		console.log("menuItem", menuItem);
 	},
 	handleSubmit: function() {
 		var challengeJson = {};
@@ -36,8 +42,16 @@ var CreateChallenge = React.createClass({
 		// need to send challengeJson to the api
 	},
 	render: function() {
+		var menuItems = [
+			{ payload: '1', text: 'Never' },
+			{ payload: '2', text: 'Every Night' },
+			{ payload: '3', text: 'Weeknights' },
+			{ payload: '4', text: 'Weekends' },
+			{ payload: '5', text: 'Weekly' },
+		];
+
 	    return (
-	    	<div>
+	    	<div className="main-container">
 	    		<Card>
 	    			<CardTitle
 						title="Create a Challenge"
@@ -64,6 +78,8 @@ var CreateChallenge = React.createClass({
 									floatingLabelText="Prize"
 									hintText="$20"
 									ref="prize" />
+									<DropDownMenu menuItems={menuItems}
+										onChange={this.handleSelected} />
 								<TextField
 									floatingLabelText="Description"
 									hintText="Tell me something about this challenge"

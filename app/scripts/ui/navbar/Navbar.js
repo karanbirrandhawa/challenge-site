@@ -25,12 +25,8 @@ var Navbar = React.createClass({
 			{
 				type: MenuItem.Types.LINK,
      			payload: '/create',
-     			text: 'Create Challenges'},
-			{
-				type: MenuItem.Types.LINK,
-     			payload: '/challenge/all',
-     			text: 'All Challenges'
- 			}
+     			text: 'Create Challenges'
+     		}
 		];
 		console.log(AppBar);
 
