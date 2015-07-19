@@ -24,11 +24,15 @@ var Login = React.createClass({
 
 		var client_id = AppDataMixin.getClientId();
 		var url = "https://github.com/login/oauth/authorize?client_id=" + client_id 
-					+ "&scope=public_repo"
+					+ "&scope=public_repo";
 
 	    return (
-	       	<FlatButton linkButton={true} href={url} secondary={true} label="Login with GitHub">	
-			</FlatButton>
+	    	<div className={"frontPage"}>
+	    		<h1 style={{ color: "white", textAlign: "center",  fontSize: "67.5px"}}>ChallengeHub</h1>
+	    		<h2 style={{color:"white", textAlign: "center", fontSize: "30px"}}>Pushing Devs to the New Limits </h2>
+	    		<h3 style={{color:"white", textAlign: "center", fontSize: "20px"}}>Want a Challenge? Login In Here: </h2>
+	    	    <FlatButton linkButton={true} href={url} secondary={true} label="Login with GitHub"></FlatButton>
+			</div>
 	    );
 	}
 });
