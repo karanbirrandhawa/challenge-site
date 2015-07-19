@@ -55,7 +55,7 @@ var ChallengeApp = React.createClass({
     return (
       <div>
         <Navbar />
-        <Locations hash>
+        <Locations>
           <Location path="/" handler={Dashboard} />
           <Location path="/login" handler={Login} />
           <Location path="/viewAttempt" handler={ViewAttempt} />

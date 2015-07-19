@@ -19,7 +19,7 @@ var Login = React.createClass({
 	render: function() {
 		var userData = UserDataMixin.login();
 	  	if (userData) {
-	  		//window.history.pushState(null, null, "/");
+	  		window.history.pushState(null, null, "/");
 	  	}
 
 		var client_id = AppDataMixin.getClientId();
