@@ -99,3 +99,32 @@ body {
 .shift-left {
     margin-left:-24px !important;
 }
+
+.center-horizontal {
+    position: relative;
+    text-align: center;
+    width: 50%;
+    margin:0 auto;
+}
+
+.pull-right {
+    position: relative;
+    float: right;
+}
+
+.pull-left {
+    position: relative;
+    float: left;
+}
+
+.main-card {
+    padding:10px;
+    height:80px;
+}
+
+.main-card-money {
+    top:-60px;
+    right:15px;
+    font-size:24px;
+    color: #00bcd4;
+}

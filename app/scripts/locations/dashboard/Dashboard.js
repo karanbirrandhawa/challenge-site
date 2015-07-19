@@ -1,8 +1,11 @@
 var React = window.React = require('react');
 var UserDataMixin = require('../../mixins/UserDataMixin.js');
 var AppDataMixin = require('../../mixins/AppDataMixin.js');
+var MainCard = require('../../ui/mainCard/MainCard.js');
 var ListCard = require('../../ui/ListCard');
 var mui = require('material-ui');
+var CardHeader = mui.CardHeader;
+var CardTitle = mui.CardTitle;
 var ListItem = mui.ListItem;
 var List = mui.List;
 var ThemeManager = mui.Styles.ThemeManager();
@@ -29,7 +32,20 @@ var Dashboard = React.createClass({
       }
     } else {
       return {
-        challenges: []
+        challenges: [{
+          owner: "Anthony",
+          title: "this is the first issue",
+          prize: "90",
+          description: "this is the description",
+          id: "95903349"
+        }, {
+          owner: "Anthony",
+          title: "another feature",
+          prize: "100",
+          description: "this is another description",
+          id: "95892857"
+        }
+        ]
       }
     }
   },
@@ -43,7 +59,8 @@ var Dashboard = React.createClass({
   },
   handleClick: function(id) {
     var url = "/challenge?id=" + id;
-    window.history.pushState(null, null, "/login");
+    // window.history.pushState(null, null, "/login");
+    window.open(url);
   },
   render: function() {
 
@@ -56,14 +73,21 @@ var Dashboard = React.createClass({
     return (
 
         <div>
+          <div className="center-horizontal">
+            <h1>My Feed</h1>
+          </div>
           <List className={content}>
-          { 
-            this.state.challenges.map(function(result) {
+          {
+            this.state.challenges.map(function(result, key) {
               var url = "/challenge?id=" + result.gitIssueID;
               console.log(result);
               return (
-                  <ListItem>
-                    <Link href={url}>{result.title}</Link>
+                  <ListItem
+                    onClick={self.handleClick.bind(self, key)}>
+                    <MainCard
+                      owner={result.owner}
+                      title={result.title}
+                      description={result.description}/>
                   </ListItem>
                 )
             })
