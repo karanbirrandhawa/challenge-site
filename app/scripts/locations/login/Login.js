@@ -25,10 +25,10 @@ var Login = React.createClass({
 
 	    return (
 	    	<div className={"frontPage"}>
-	    			<h1 style={{ paddingTop: "150px", color: "White", marginTop: "0", textAlign: "center",  fontSize: "67.5px"}}>ChallengeHub</h1>
+	    			<h1 style={{ paddingTop: "150px", color: "White", textAlign: "center",  fontSize: "67.5px"}}>ChallengeHub</h1>
 	    			<h2 style={{color:"White", textAlign: "center", fontSize: "30px"}}>Pushing Devs to the New Limits </h2>
 	    			<h3 style={{color:"White", textAlign: "center", fontSize: "20px"}}>Want a Challenge? Login In Here: </h3>
-	    	    	<div style={{marginLeft:'40%'}}>
+	    	    	<div style={{ width: "220px", margin: "0 auto", display: "block" }}>
 	    	    		<FlatButton style={{textAlign:"center"}} linkButton={true} href={url} secondary={true} label="Login with GitHub"></FlatButton>
 					</div>
 			</div>
