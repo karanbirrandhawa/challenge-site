@@ -16,9 +16,9 @@ var UserDataMixin = {
         type: "GET",
         url: "https://api.github.com/user",
         beforeSend: function (request)
-            {
-                request.setRequestHeader("Authorization", tokenStr);
-            },
+        {
+            request.setRequestHeader("Authorization", tokenStr);
+        },
       }).done(function(data) {
         this.userData = {
           userId: data.id,
