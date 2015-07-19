@@ -104,7 +104,6 @@ var ViewChallenge = React.createClass({
 		];
 
 	 	return (
-<<<<<<< HEAD
 		 	<div>
 		 		<Card>
 					<CardTitle className="inline" title={this.state.challengeTitle} />
