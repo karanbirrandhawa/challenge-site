@@ -1,17 +1,29 @@
 var React = window.React = require('react'),
+	$ = require('jquery'),
 	mui = require('material-ui'),
 	Avatar = mui.Avatar,
 	Card = mui.Card,
 	CardText = mui.CardText,
 	CardTitle = mui.CardTitle,
+	CircularProgress = mui.CircularProgress,
 	DropDownMenu = mui.DropDownMenu,
 	RadioButton = mui.RadioButton,
 	RadioButtonGroup = mui.RadioButtonGroup,
 	RaisedButton = mui.RaisedButton,
 	TextField = mui.TextField,
-	ThemeManager = mui.Styles.ThemeManager();
+	ThemeManager = mui.Styles.ThemeManager()
+	UserDataMixin = require('../../mixins/UserDataMixin.js');
 
 var CreateChallenge = React.createClass({
+	getInitialState: function() {
+		return {
+			repoList: null,
+			selected: null
+		};
+	},
+	componentDidMount: function() {
+		this.getRepoList();
+	},
 	childContextTypes: {
 		muiTheme: React.PropTypes.object
 	},
@@ -21,80 +33,124 @@ var CreateChallenge = React.createClass({
 		};
 	},
 	handleSelected: function(e, selectedIndex, menuItem) {
-		console.log("e", e);
-		console.log("selectedIndex", selectedIndex);
-		console.log("menuItem", menuItem);
+		this.state.selected = selectedIndex;
+		console.log(this.state.selected);
 	},
 	handleSubmit: function() {
 		var challengeJson = {};
 			title = this.refs.title.getValue(),
 			challengeType = this.refs.challengeType.getSelectedValue(),
 			description = this.refs.description.getValue(),
-			prize = this.refs.prize.getValue();
+			prize = this.refs.prize.getValue(),
+			repo = this.state.repoList[this.state.selected - 1];
+			// subtract 1 because the first index is the default one
 
 		// set the values to the json
 		challengeJson.title = title;
 		challengeJson.description = description;
 		challengeJson.challengeType = challengeType;
 		challengeJson.prize = prize;
+		challengeJson.repo = repo;
 
 		console.log("challengeJson is", challengeJson);
 		// need to send challengeJson to the api
 	},
-	render: function() {
-		var menuItems = [
-			{ payload: '1', text: 'Never' },
-			{ payload: '2', text: 'Every Night' },
-			{ payload: '3', text: 'Weeknights' },
-			{ payload: '4', text: 'Weekends' },
-			{ payload: '5', text: 'Weekly' },
-		];
+	getRepoList: function() {
+		var userData = UserDataMixin.login();
+		var userName = userData.userName;
+		var url = "https://api.github.com/user/repos";
+		var tokenStr = "token " + UserDataMixin.getAccessToken();
+		var self = this;
+		var promise = new Promise(function(resolve, reject) {
+			$.ajax({
+		    	type: "GET",
+		    	url: url,
+		    	beforeSend: function (request)
+	            {
+					request.setRequestHeader("Authorization", tokenStr);
+	            }
+			}).done(function(data) {
+				if (data.error) {
+					reject(data);
+				} else {
+					resolve(data);
+				}
+			});
+		});
+		promise.then(function(resolvedResponse) {
+			console.log(resolvedResponse);
 
-	    return (
-	    	<div className="main-container">
-	    		<Card>
-	    			<CardTitle
-						title="Create a Challenge"
-						subtitle="Fill in this form to create your new challenge" />
-						<CardText>
-							<div className="form-container">
-								<TextField
-									floatingLabelText="Title"
-									hintText="My challenge name"
-									ref="title" />
-								<RadioButtonGroup name="challengeType"
-									defaultSelected="feature"
-									ref="challengeType" >
-									<RadioButton
-										value="feature"
-										label="I want to make a new Feature Challenge"
-										style={{marginBottom:16}} />
-									<RadioButton
-										value="bug"
-										label="I want to make a  Bug Challenge"
-										style={{marginBottom:16}}/>
-								</RadioButtonGroup>
-								<TextField
-									floatingLabelText="Prize"
-									hintText="$20"
-									ref="prize" />
-									<DropDownMenu menuItems={menuItems}
-										onChange={this.handleSelected} />
-								<TextField
-									floatingLabelText="Description"
-									hintText="Tell me something about this challenge"
-									multiLine={true}
-									fullWidth={true}
-									ref="description" />
-								<RaisedButton
-									label="Submit"
-									secondary={true}
-									onClick={this.handleSubmit} />
-							</div>
-						</CardText>
-	    		</Card>
-	    	</div>
-	    );
+			self.setState({
+				repoList: resolvedResponse
+			});
+		}, function(rejectedResponse) {
+			console.log("There was an error in the github call. The error is ", rejectedResponse);
+		});
+	},
+	render: function() {
+		if (!this.state.repoList) {
+			return (
+				<CircularProgress mode="indeterminate" />
+				);
+		} else {
+			var menuItems = [{
+				payload: 1,
+				text: "Select a repository"
+			}];
+
+			this.state.repoList.forEach(function(element, index, array) {
+				menuItems.push({
+					payload: element.url,
+					text: element.name
+				})
+			});
+
+			return (
+		    	<div className="main-container">
+		    		<Card>
+		    			<CardTitle
+							title="Create a Challenge"
+							subtitle="Fill in this form to create your new challenge" />
+							<CardText>
+								<div className="form-container">
+									<TextField
+										floatingLabelText="Title"
+										hintText="My challenge name"
+										ref="title" />
+									<RadioButtonGroup name="challengeType"
+										defaultSelected="feature"
+										ref="challengeType" >
+										<RadioButton
+											value="feature"
+											label="I want to make a new Feature Challenge"
+											style={{marginBottom:16}} />
+										<RadioButton
+											value="bug"
+											label="I want to make a  Bug Challenge"
+											style={{marginBottom:16}}/>
+									</RadioButtonGroup>
+									<TextField
+										floatingLabelText="Prize"
+										hintText="$20"
+										ref="prize" />
+										<DropDownMenu menuItems={menuItems}
+											onChange={this.handleSelected} />
+									<TextField
+										floatingLabelText="Description"
+										hintText="Tell me something about this challenge"
+										multiLine={true}
+										fullWidth={true}
+										ref="description" />
+									<RaisedButton
+										label="Submit"
+										secondary={true}
+										onClick={this.handleSubmit} />
+								</div>
+							</CardText>
+		    		</Card>
+		    	</div>
+		    );
+		}
 	}
 });
 
