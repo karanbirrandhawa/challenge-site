@@ -12,7 +12,7 @@ var Dashboard = require("./locations/dashboard/Dashboard.js");
 var Login = require("./locations/login/Login.js");
 var ViewAttempt = require("./locations/viewAttempt/ViewAttempt");
 var CreateChallenge = require("./locations/createChallenge/CreateChallenge.js");
-var ChallengeDisplay = require("./locations/challengeDisplay/ChallengeDisplay.js");
+var ViewChallenge = require("./locations/viewChallenge/ViewChallenge.js");
 var ReviewAttempt = require("./locations/reviewAttempt/ReviewAttempt.js");
 var ViewAllAttempts = require("./locations/viewAllAttempts/ViewAllAttempts.js");
 
@@ -23,7 +23,9 @@ injectTapEventPlugin();
 
 var ChallengeApp = React.createClass({
   getInitialState: function() {
-    return {items: [], text: ''};
+    return {
+      
+    };
   },
   render: function() {
     // Should replace with regex. This is damn flimsy
@@ -58,7 +60,7 @@ var ChallengeApp = React.createClass({
           <Location path="/login" handler={Login} />
           <Location path="/viewAttempt" handler={ViewAttempt} />
           <Location path="/create" handler={CreateChallenge} />
-          <Location path="/challenge" handler={ChallengeDisplay} />
+          <Location path="/challenge" handler={ViewChallenge} />
           <Location path="/reviewAttempt" handler={ReviewAttempt} />
           <Location path="/viewAllAttempts" handler={ViewAllAttempts} />
         </Locations>

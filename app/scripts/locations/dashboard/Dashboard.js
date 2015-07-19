@@ -5,7 +5,6 @@ var AppDataMixin = require('../../mixins/AppDataMixin.js');
 
 // Instantiate site 
 var Dashboard = React.createClass({
-  
   render: function() {
   	var userData = UserDataMixin.login();
   	if (!userData) {
