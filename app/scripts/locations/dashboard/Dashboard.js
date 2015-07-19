@@ -58,6 +58,7 @@ var Dashboard = React.createClass({
     };
   },
   handleClick: function(id) {
+    console.log(id);
     var url = "/challenge?id=" + id;
     // window.history.pushState(null, null, "/login");
     window.open(url);
@@ -75,10 +76,11 @@ var Dashboard = React.createClass({
           {
             this.state.challenges.map(function(result, key) {
               var url = "/challenge?id=" + result.gitIssueID;
-              console.log(result);
               return (
                   <ListItem
-                    onClick={self.handleClick.bind(self, key)}>
+                    onClick={function() {
+                      window.history.pushState(null, null, url);
+                    }}>
                     <MainCard
                       owner={result.owner}
                       title={result.title}
