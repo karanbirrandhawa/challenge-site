@@ -44,6 +44,7 @@ var CreateChallenge = React.createClass({
 		console.log(this.state.selected);
 	},
 	handleSubmit: function() {
+		var self = this;
 		var challengeJson = {};
 			title = this.refs.title.getValue(),
 			challengeType = this.refs.challengeType.getSelectedValue(),
@@ -104,14 +105,25 @@ var CreateChallenge = React.createClass({
 					request.setRequestHeader("Content-Type", "application/json");
 	            }
 			}).done(function(data) {
-				console.log(data);
-				var form = document.querySelector('#example-form');
-				var str = serialize(form);
+				window.history.pushState(null, null, "/");
+			});
 
-				$.ajax({
+			var client = new braintree.api.Client({
+			  clientToken: self.state.btClientToken
+			});
+
+			client.tokenizeCard({
+			  number: '4111111111111111',
+			  expirationDate: '10/20'
+			}, function (err, nonce) {
+			  // Send nonce to your server
+			  console.log("nonce is " + nonce);
+			  $.ajax({
 			    	type: "POST",
 			    	url: "api/purchases",
-			    	data: str,
+			    	data: JSON.stringify({
+			    		payment_method_nonce: nonce
+			    	}),
 			    	beforeSend: function (request)
 		            {
 						request.setRequestHeader("Content-Type", "application/json");
@@ -119,8 +131,6 @@ var CreateChallenge = React.createClass({
 				}).done(function(data) {
 					console.log("Response for form");
 					console.log(data);
-					var form = document.querySelector('.braintree-paypal-form');
-					var str = serialize(form);
 					
 					window.history.pushState(null, null, "/");
 				});
