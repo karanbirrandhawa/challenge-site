@@ -5,6 +5,7 @@ var Card = mui.Card;
 var CardTitle = mui.CardTitle;
 var FlatButton = mui.FlatButton;
 var Dialog = mui.Dialog;
+var Snackbar = mui.Snackbar;
 var ThemeManager = mui.Styles.ThemeManager();
 var UserDataMixin = require('../../mixins/UserDataMixin.js');
 
@@ -35,7 +36,7 @@ var ViewChallenge = React.createClass({
 				challengeTitle: d.title,
 				challengeTitleDescription: d.description,
 				challengeGitIssueID: d.gitIssueID,
-				challengeGitIssueURL: d.gitIssueURL
+				challengeGitIssueURL: d.gitIssueURL,
 			}
     	} else {
     		return {
@@ -50,10 +51,12 @@ var ViewChallenge = React.createClass({
 			muiTheme: ThemeManager.getCurrentTheme()
 		}
 	},
-	attemptChallenge: function(owner, repo) {
-		this.state.challengeAttempted = true;
-		/**
-		var forkedUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/forks"
+	attemptChallenge: function(e) {
+		var repo_general = this.state.challengeGitIssueURL.split("/issues")[0];
+		var owner_and_repo = repo_general.split("github.com/")[1];
+
+		var forkedUrl = "https://api.github.com/repos/" + owner_and_repo + "/forks"
+
 		var tokenStr = "token " + UserDataMixin.getAccessToken();
 		var promise = new Promise(function(resolve, reject) {
 			$.ajax({
@@ -72,13 +75,17 @@ var ViewChallenge = React.createClass({
       		});
 		});
 		promise.then(function(resolvedResponse) {
-			this.state.challengeAttempted = true;
-			this.state.myAttemptInfo.forkUrl = resolvedResponse.html_url;
+			this.state.forkUrl = resolvedResponse.html_url;
+			console.log(resolvedResponse);
+			this.refs.snackbar.show();
 		},
 		function(rejectedResponse) {
 			console.log(rejectedResponse);
 		});
-		**/
+	},
+	_handleAction() {
+	  //We can add more code to this function, but for now we'll just include an alert.
+	  window.open(this.state.forkUrl);
 	},
 	render: function() {
 		var challengeData = {
@@ -97,32 +104,30 @@ var ViewChallenge = React.createClass({
 		];
 
 	 	return (
-	 	<div>
-	 		<Card>
-				<CardTitle className="inline" title={this.state.challengeTitle} />
-			</Card>
-			<div className ="challengeButton">
-				<FlatButton linkButton={true} href="/viewAllAttempts" secondary={true} label="View all pull requests">	
-				</FlatButton>
-				<FlatButton onClick={this.attemptChallenge} secondary={true} label="Attempt it!">	
-				</FlatButton>
-			</div>
-			<div className="commentBox">
-				<div>Comments:</div>
-				<Card>
-					<div>{this.state.challengeTitleDescription}</div>
+		 	<div>
+		 		<Card>
+					<CardTitle className="inline" title={this.state.challengeTitle} />
 				</Card>
+				<div className ="challengeButton">
+					<FlatButton linkButton={true} href="/viewAllAttempts" secondary={true} label="View all pull requests">	
+					</FlatButton>
+					<FlatButton onClick={this.attemptChallenge} secondary={true} label="Attempt it!">	
+					</FlatButton>
+				</div>
+				<div className="commentBox">
+					<div>Comments:</div>
+					<Card>
+						<div>{this.state.challengeTitleDescription}</div>
+					</Card>
+				</div>
+
+				<Snackbar
+				  ref="snackbar"
+				  message="Head over to your newly forked url now!"
+				  action="Link"
+				  autoHideDuration={this.state.autoHideDuration}
+				  onActionTouchTap={this._handleAction}/>
 			</div>
-
-			<Dialog
-			  title="Dialog With Standard Actions"
-			  actions={standardActions}
-			  actionFocus="submit"
-			  modal={this.state.modal}>
-			  The actions in this window are created from the json thats passed in.
-			</Dialog>
-
-		</div>
 	    );
 	}
 });
