@@ -181,8 +181,10 @@ var CreateChallenge = React.createClass({
 										floatingLabelText="Prize"
 										hintText="$20"
 										ref="prize" />
+									<div className="shift-left">
 										<DropDownMenu menuItems={menuItems}
 											onChange={this.handleSelected} />
+									</div>
 									<TextField
 										floatingLabelText="Description"
 										hintText="Tell me something about this challenge"

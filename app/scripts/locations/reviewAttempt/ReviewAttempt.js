@@ -5,6 +5,7 @@ var Avatar = mui.Avatar;
 var CardTitle = mui.CardTitle;
 var CardText = mui.CardText;
 var Card = mui.Card;
+var CircularProgress = mui.CircularProgress;
 var RaisedButton = mui.RaisedButton;
 var List = mui.List;
 var	ListItem = mui.ListItem;
@@ -161,6 +162,14 @@ var	ListItem = mui.ListItem;
 //----------------------Hard Code Ends ------------------------------------------------------------
 
 var ReviewAttempt = React.createClass({
+	getInitialState: function() {
+		return {
+			btClientToken: null
+		}
+	},
+	componentDidMount: function() {
+		this.getBTClientID();
+	},
 	childContextTypes: {
 		muiTheme: React.PropTypes.object
 	},
@@ -168,6 +177,32 @@ var ReviewAttempt = React.createClass({
 		return {
 			muiTheme: ThemeManager.getCurrentTheme()
 		};
+	},
+	getBTClientID: function() {
+		// send a request at the beginning to the btClientToken
+		var self = this;
+		var promise = new Promise(function(resolve, reject) {
+			$.ajax({
+		    	type: "GET",
+		    	url: "api/client_token"
+			}).done(function(data) {
+				if (data.error) {
+					reject(data);
+				} else {
+					resolve(data);
+				}
+			});
+		});
+		promise.then(function(resolvedResponse) {
+			self.setState({
+				btClientToken: resolvedResponse
+			});
+			console.log(resolvedResponse);
+			console.log("resolved");
+		}, function(rejectedResponse) {
+			console.log(rejectedResponse);
+			console.log("rejected");
+		});
 	},
 	handleClick: function(index) {
 		var url = testCommits[index].commit.url;
@@ -186,7 +221,14 @@ var ReviewAttempt = React.createClass({
 		var reviewAttemptData = {
 			attemptTitle: "Title"
 		}
-		return (<div className="main-container">
+
+		if(!this.state.btClientToken) {
+			return (
+				<CircularProgress mode="indeterminate" />
+			);
+		}
+		else {
+			return (<div className="main-container">
 					<Card>
 						<CardTitle title={reviewAttemptData.attemptTitle}/>
 					</Card>
@@ -225,6 +267,7 @@ var ReviewAttempt = React.createClass({
 	    			</Card>
 				</div>
 		);
+		}
 	}
 });
 
