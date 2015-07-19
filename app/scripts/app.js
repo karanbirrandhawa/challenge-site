@@ -13,6 +13,8 @@ var Login = require("./locations/login/Login.js");
 var ViewAttempt = require("./locations/viewAttempt/ViewAttempt");
 var CreateChallenge = require("./locations/createChallenge/CreateChallenge.js");
 var ViewChallenge = require("./locations/viewChallenge/ViewChallenge.js");
+var ReviewAttempt = require("./locations/reviewAttempt/ReviewAttempt.js");
+var ViewAllAttempts = require("./locations/viewAllAttempts/ViewAllAttempts.js");
 
 // Instantiate site 
 var Navbar = require("./ui/navbar/Navbar.js")
@@ -53,12 +55,14 @@ var ChallengeApp = React.createClass({
     return (
       <div>
         <Navbar />
-        <Locations>
+        <Locations hash>
           <Location path="/" handler={Dashboard} />
           <Location path="/login" handler={Login} />
           <Location path="/viewAttempt" handler={ViewAttempt} />
           <Location path="/create" handler={CreateChallenge} />
           <Location path="/challenge" handler={ViewChallenge} />
+          <Location path="/reviewAttempt" handler={ReviewAttempt} />
+          <Location path="/viewAllAttempts" handler={ViewAllAttempts} />
         </Locations>
       </div>
     );

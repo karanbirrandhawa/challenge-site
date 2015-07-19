@@ -74,6 +74,17 @@ var ViewChallenge = React.createClass({
 		  { text: 'Submit', onTouchTap: this._onDialogSubmit, ref: 'submit' }
 		];
 
+		var loc = window.location.href;
+    	var items = loc.split("?id=");
+
+    	if (items.length > 1) {
+    		$.get("api/challenge/" + items[1], function(data) {
+    			this.state.myAttemptInfo.title = data.title;
+    			this.state.myAttemptInfo.gitIssueURL = data.gitIssueURL;
+    			this.state.myAttemptInfo.gitIssueID = data.gitIssueID;
+    		});
+    	}
+
 	 	return (
 	 	<div>
 	 		<Card>

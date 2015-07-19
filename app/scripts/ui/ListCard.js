@@ -10,6 +10,8 @@ var React = require('react'),
          author: 'Peter Sun\'s hoes',
          description: 'I want Anthony to build an issues page',
          avatar: 'http://vignette2.wikia.nocookie.net/roblox/images/3/38/Transparent_Troll_Face.png/revision/latest?cb=20120713214853',
+         issueLink: 'https://github.com/callemall/material-ui/issues/1202',
+         challengeLink: 'https://github.com/callemall/material-ui/issues/1202',
          date: Date(),
          type: 'bug',
     },
@@ -41,8 +43,8 @@ var ListCard = React.createClass({
        this.retrieveCardData();
     },
     retrieveCardData: function(){
-        var self = this;/*
-        var promise = new Promise(function(resolve,reject){
+        var self = this;
+        /*var promise = new Promise(function(resolve,reject){
             $.get(this.props.source, function(response){
                 if(response && !response.error){
                     resolve(response);
@@ -57,6 +59,9 @@ var ListCard = React.createClass({
         this.populateData(self.state.cardJSON);
                
     },
+    AcceptChallenge: function(){
+        console.log('This fucker accepted the challenge.');
+    },
     
     populateData: function(resData){
         this.setState({ cardJSON:resData});
@@ -67,21 +72,26 @@ var ListCard = React.createClass({
         var row = "row";
         var contentLeft = "content-left";
         var contentRight = "content-right";
+        var buttonWrap = "wrap-button";
         return(
             <Card>
-                <div className={row}>
-                    <div className={contentLeft}>
-                        <CardHeader
-                            title = {data.title}
-                            subtitle = {data.author}
-                            avatar={data.avatar}/>
-                    </div>
-                </div>
+               <CardHeader
+                    title = {data.title}
+                    subtitle = {data.author}
+                    avatar={data.avatar}/>
                 <CardText>{data.description}</CardText>
                 <div className={row}>
                     <div className={contentRight}>
-                        <RaisedButton label="Accept The Challenge!"/>
-                        <RaisedButton label="View on Github" />
+                        <div className={buttonWrap}>
+                            <RaisedButton linkButton={true} href={data.challengeLink} label="View The Challenge!"/>
+                        </div>
+                        <div className={buttonWrap}>
+                            <RaisedButton onClick={this.AcceptChallenge()} label="Accept The Challenge!"/>
+                        </div>
+                        <div className={buttonWrap}>
+                            <RaisedButton linkButton={true} href={data.issueLink} secondary={true} label="View on Github" />
+                        </div>
+                           
                     </div>
 
                 </div>
