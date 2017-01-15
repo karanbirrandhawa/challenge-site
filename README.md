@@ -1,6 +1,7 @@
 # challenge-site
 
-This is the front-end repo for ChallengeHub.
+This is the front-end repo for ChallengeHub. 
+Find the API built on top of the hapi nodejs framework [here](https://github.com/anthonyluu/challenge-api)
 This repo was apart of our Hack for BattleHacks Toronto.
 This consists of the front-end which was built with React.js
 
